@@ -23,25 +23,31 @@
 
 
     <script>
-      var input = document.getElementById("input")
-        var output = document.getElementById("output")
-        var socket = new WebSocket("ws://localhost:8080/echo");
-         
+var input = document.getElementById("input");
+var output = document.getElementById("output");
+var socket = new WebSocket("ws://localhost:8080/echo");
 
-        socket.onopen = function(e){
-            output.innerHTML += "status :Connected <br>";
-        }
-        socket.onmessage = function(e){
-            //output.innerHTML += "server: " +  e.data + "\n";
-            document.getElementById("opt-msg").innerHTML = "Server : " + e.data + "<br>";
-        }
+socket.onopen = function(e) {
+    output.innerHTML += "status: Connected<br>";
+};
 
-        function send(){
-         socket.send(input.value);
-         input.value= "";
+socket.onmessage = function(e) {
+    
+    document.getElementById("opt-msg").innerHTML += "Server: " + e.data + "<br>";
+};
 
-        
-        }
+input.addEventListener("keydown", function(event) {
+    if (event.key === "Enter") {
+        send();
+    }
+});
+
+function send() {
+    if (input.value.trim() !== "") {  
+        socket.send(input.value);
+        input.value = ""; 
+    }
+}
     </script>
 
 
