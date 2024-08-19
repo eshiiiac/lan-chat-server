@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Lan chat eshii</title>
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+    <div class="screen">
+
+      <div id="opt-msg">
+        
+      </div>
+
+
+      <div class="msg">
+        <input id="input" type="text" />
+      <button onclick="send()">Send</button>
+      <pre id="output"></pre>
+      </div>
+    </div>
+
+
+    <script>
+      var input = document.getElementById("input")
+        var output = document.getElementById("output")
+        var socket = new WebSocket("ws://localhost:8080/echo");
+         
+
+        socket.onopen = function(e){
+            output.innerHTML += "status :Connected <br>";
+        }
+        socket.onmessage = function(e){
+            //output.innerHTML += "server: " +  e.data + "\n";
+            document.getElementById("opt-msg").innerHTML = "Server : " + e.data + "<br>";
+        }
+
+        function send(){
+         socket.send(input.value);
+         input.value= "";
+
+        
+        }
+    </script>
+
+
+<style>
+  *{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    
+}
+body{
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: black;
+}
+.screen{
+    height: 100%;
+    width: 90%;
+    background-color: #1d1d1d;
+    padding: 25px;
+    background-color: rgb(74, 74, 74);
+
+    display: flex;
+    flex-direction: column;
+}
+#opt-msg{
+    height: 80%;
+    background-color: #1d1d1d;
+    padding: 10px;
+    color: rgb(11, 255, 11);
+    overflow-y: scroll;
+}
+.msg{
+    display: flex;
+    align-items: center;
+    height: 7%;
+}
+.screen input{
+    height: 5vh;
+    width: 35vh;
+    color: white;
+    background-color: black;
+    border: none;
+    text-align: justify;
+    padding: 5px;
+    outline: none;
+}
+.screen button{
+    height: 5vh;
+    width: 10vh;
+    border: none;
+}
+</style>
+    
+  </body>
+</html>
