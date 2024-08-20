@@ -13,7 +13,6 @@
         
       </div>
 
-
       <div class="msg">
         <input id="input" type="text" />
       <button onclick="send()">Send</button>
@@ -27,13 +26,19 @@ var input = document.getElementById("input");
 var output = document.getElementById("output");
 var socket = new WebSocket("ws://localhost:8080/echo");
 
+
+window.onload = function() {
+            document.getElementById("input").focus();
+        };
+
 socket.onopen = function(e) {
-    output.innerHTML += "status: Connected<br>";
+   
+    output.innerHTML += "status: Connected";
 };
 
 socket.onmessage = function(e) {
     
-    document.getElementById("opt-msg").innerHTML += "Server: " + e.data + "<br>";
+    document.getElementById("opt-msg").innerHTML += e.data + "<br>";
 };
 
 input.addEventListener("keydown", function(event) {
